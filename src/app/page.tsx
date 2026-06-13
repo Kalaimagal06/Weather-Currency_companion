@@ -31,13 +31,7 @@ export default function HomePage() {
     setState({ status: "loading" });
 
     try {
-      const baseCurrency =
-        CITY_CURRENCIES[city.toLowerCase().trim()] ?? "USD";
-
-      const [weatherRes, currencyRes] = await Promise.all([
-        fetch(`/api/weather?city=${encodeURIComponent(city)}`),
-        fetch(`/api/currency?base=${baseCurrency}`),
-      ]);
+      const weatherRes = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
 
       if (weatherRes.status === 429) {
         setState({
@@ -56,10 +50,19 @@ export default function HomePage() {
         return;
       }
 
-      const [weather, currency] = await Promise.all([
-        weatherRes.json(),
-        currencyRes.json(),
-      ]);
+      const weather = await weatherRes.json();
+      const baseCurrency = weather.currencyCode || "USD";
+
+      const currencyRes = await fetch(`/api/currency?base=${baseCurrency}`);
+      if (!currencyRes.ok) {
+        setState({
+          status: "error",
+          message: "Could not fetch currency data.",
+        });
+        return;
+      }
+
+      const currency = await currencyRes.json();
 
       setState({ status: "success", weather, currency });
     } catch {
@@ -73,11 +76,10 @@ export default function HomePage() {
   return (
     <main className="min-h-screen relative overflow-hidden flex flex-col">
       {/* Animated background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-slate-950" />
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-violet-600/15 rounded-full blur-[120px] animate-pulse [animation-delay:2s]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-cyan-500/10 rounded-full blur-[100px]" />
+      <div className="fixed inset-0 -z-10 bg-[#F8FAFC] overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-200/60 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-fuchsia-200/60 rounded-full blur-[120px] animate-pulse [animation-delay:2s]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-100/40 rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 flex flex-col items-center px-4 py-10 md:py-16 flex-1">

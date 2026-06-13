@@ -37,11 +37,11 @@ export default function WeatherCard({ data }: WeatherCardProps) {
   const tempGradient = getTemperatureColor(data.temperature);
 
   return (
-    <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 overflow-hidden
-      transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_40px_rgba(59,130,246,0.1)]
+    <div className="relative rounded-3xl border border-slate-100 bg-white shadow-sm p-6 overflow-hidden
+      transition-all duration-300 hover:border-slate-200 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]
       animate-[fadeInUp_0.5s_ease_both]">
       {/* Background glow */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
@@ -50,10 +50,10 @@ export default function WeatherCard({ data }: WeatherCardProps) {
             <MapPin className="w-3.5 h-3.5" />
             <span>Weather</span>
           </div>
-          <h2 className="text-3xl font-bold text-white">{data.city}</h2>
-          <span className="text-slate-400 text-sm mt-0.5 block">{data.condition}</span>
+          <h2 className="text-3xl font-bold text-slate-800">{data.city}</h2>
+          <span className="text-slate-500 text-sm mt-0.5 block">{data.condition}</span>
         </div>
-        <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
+        <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
           {getWeatherIcon(data.condition)}
         </div>
       </div>
@@ -103,12 +103,12 @@ function StatPill({
 }) {
   return (
     <div
-      className={`flex items-center gap-3 rounded-xl bg-white/5 border border-white/10 px-4 py-3 ${className}`}
+      className={`flex items-center gap-3 rounded-xl bg-slate-50 border border-slate-100 px-4 py-3 ${className}`}
     >
       {icon}
       <div>
-        <p className="text-slate-500 text-xs">{label}</p>
-        <p className="text-white font-semibold text-sm">{value}</p>
+        <p className="text-slate-400 text-xs">{label}</p>
+        <p className="text-slate-700 font-semibold text-sm">{value}</p>
       </div>
     </div>
   );

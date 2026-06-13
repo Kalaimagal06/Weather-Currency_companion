@@ -32,15 +32,15 @@ export default function SearchBar({ onSearch, loading }: SearchBarProps) {
         <div
           className={`
             flex items-center gap-3 rounded-2xl border px-5 py-4
-            bg-white/5 backdrop-blur-xl transition-all duration-300
+            bg-white shadow-sm transition-all duration-300
             ${focused
-              ? "border-blue-500/60 shadow-[0_0_30px_rgba(59,130,246,0.2)]"
-              : "border-white/10 hover:border-white/20"
+              ? "border-blue-400 shadow-[0_4px_30px_rgba(59,130,246,0.15)]"
+              : "border-slate-200 hover:border-slate-300 hover:shadow-md"
             }
           `}
         >
           {loading ? (
-            <Loader2 className="w-5 h-5 text-blue-400 animate-spin shrink-0" />
+            <Loader2 className="w-5 h-5 text-blue-500 animate-spin shrink-0" />
           ) : (
             <Search className="w-5 h-5 text-slate-400 shrink-0" />
           )}
@@ -53,15 +53,15 @@ export default function SearchBar({ onSearch, loading }: SearchBarProps) {
             onBlur={() => setFocused(false)}
             placeholder="Search a city, e.g. Tokyo…"
             disabled={loading}
-            className="flex-1 bg-transparent text-white placeholder-slate-500 text-lg outline-none disabled:opacity-60"
+            className="flex-1 bg-transparent text-slate-800 placeholder-slate-400 text-lg outline-none disabled:opacity-60"
             autoComplete="off"
           />
           <button
             type="submit"
             disabled={loading || !value.trim()}
-            className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold text-sm
+            className="px-6 py-2.5 rounded-xl bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-semibold text-sm
               transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed
-              shadow-[0_2px_16px_rgba(59,130,246,0.4)] hover:shadow-[0_2px_24px_rgba(59,130,246,0.6)]"
+              shadow-[0_4px_14px_rgba(59,130,246,0.3)] hover:shadow-[0_6px_20px_rgba(59,130,246,0.4)]"
           >
             Search
           </button>
@@ -75,8 +75,8 @@ export default function SearchBar({ onSearch, loading }: SearchBarProps) {
             key={city}
             onClick={() => handleSuggestion(city)}
             disabled={loading}
-            className="px-3 py-1 rounded-full text-xs font-medium text-slate-400 border border-white/10
-              bg-white/5 hover:bg-white/10 hover:text-white hover:border-white/20
+            className="px-4 py-1.5 rounded-full text-xs font-medium text-slate-600 border border-slate-200
+              bg-white hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 shadow-sm
               transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {city}
